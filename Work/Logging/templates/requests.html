@@ -1,0 +1,58 @@
+{% load static %}
+<html lang="en">
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+    <link rel="stylesheet" href="{% static 'Logging/css/requests.css' %}">
+<head>
+    <meta charset="UTF-8">
+    <title>Requests</title>
+</head>
+<body>
+<div class="sidenav">
+         <div class="login-main-text">
+            <h2>Course work, Anna Filyuzina<br> </h2>
+            <p>There will be a full information about your requests in a table that appears on the right side.</p>
+         </div>
+      </div>
+      <div class="main">
+         <div class="col-md-6 col-sm-12">
+            <div class="login-form">
+               <form action="showRequests" method="POST">
+                   {% csrf_token %}
+                  <div class="form-group">
+                     <label>User Name</label>
+                     <input type="text" value="{{log}}" id="log" name="log" class="form-control" placeholder="User Name">
+                  </div>
+                  <div class="form-group">
+                     <label>Password</label>
+                     <input type="password" value="{{pass}}" id="pass" name="pass" class="form-control" placeholder="Password">
+                  </div>
+                   <a href="http://127.0.0.1:8000/main" class="btn btn-black">Back to main page?</a>
+                  <button type="submit" class="btn btn-secondary">Check it </button>
+                   {% if messages %}
+            <ul class="messages">
+                {% for message in messages %}
+                    <br {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</br>
+                {% endfor %}
+            </ul>
+        {% endif %}
+                       {% if data.count > 0 %}
+  <div>
+  <div id="positionTable">
+  <h2 id="mesUSER">Requests:</h2>
+    <table>
+        <tr><th>Sequence</th><th>Result</th><th>User's id</th></tr>
+        {% for data in data %}
+            <tr><td>{{ data.sequence }}</td><td>{{ data.result }}</td><td>{{ data.Username_Id }}</td></tr>
+        {% endfor %}
+    </table>
+   </div>
+  {% endif %}
+  </div>
+               </form>
+            </div>
+         </div>
+      </div>
+</body>
+</html>
